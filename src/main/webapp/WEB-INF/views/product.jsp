@@ -13,33 +13,34 @@
 <div class="jumbotron">
 <div class="container">
 <h1> Products</h1>
-<p> All the available products in our store </p>
 </div>
 </div>
 </section>
 
 <section class="container">
 <div class="row">
-<c:forEach items="${products }" var="product">
-<div class="col-sm-6 col-md-3">
-<div class="thumbnail">
-<div class="caption">
+<div class="col-md-5">
+
 <h3>${product.name }</h3>
 <p>${product.description }</p>
-<p>$${product.unitPrice }</p>
-<p>Available ${product.unitsInStock } units in stock</p>
 <p>
-<a href="<spring:url value="/market/product?id=${product.productId }" />" class="btn btn-primary" >
-<span class="glyphicon-info-sign glyphicon">
-</span>
-Details
-</a>
+<strong>Item Code: </strong>${product.productId }
 </p>
-</div>
-</div>
+<p>
+<strong>Manufacturer</strong>: ${product.manufacturer }
+</p>
+<p><strong>Category:</strong> ${product.category }
+</p>
+<p><strong>Available </strong>${product.unitsInStock } <strong>units in stock</strong></p>
+
+<h4>$${product.unitPrice } USD</h4>
+<a href="<spring:url value="/market/products" />" class="btn btn-default">
+<span class="glyphicon-hand-left glyphicon"></span> back
+</a>
+<br><br>
+<a href="#" class="btn-warning btn-large"><span class="glyphicon-shopping-cart glyphicon"></span> Order Now</a>
 
 </div>
-</c:forEach>
 </div>
 </section>
 </body>

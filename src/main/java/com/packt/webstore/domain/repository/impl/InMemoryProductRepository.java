@@ -27,7 +27,62 @@ public class InMemoryProductRepository implements ProductRepository {
 		List<Product> result=jdbcTemplate.query("SELECT * FROM PRODUCTS",params, new ProductMapper());
 		return result;
 	}
+	
+	public void updateStock(String productId,long noOfUnits)
+	{
+		String SQL="UPDATE PRODUCTS SET UNITS_IN_STOCK= :unitsInStock WHERE ID= :id";
+		Map<String,Object> params=new HashMap<String,Object>();
+		params.put("unitsInStock", noOfUnits);
+		params.put("id", productId);
+		jdbcTemplate.update(SQL, params);
+	}
+	
+	public List<Product> getProductsByCategory(String category) {
+		
+		String SQL="SELECT * FROM PRODUCTS WHERE CATEGORY= :category";
+		Map<String,Object> params=new HashMap<String,Object>();
+		params.put("category", category);
+		return jdbcTemplate.query(SQL, params, new ProductMapper());
+	}
 
+	public List<Product> getProductsByFilter(Map<String, List<String>> filterParams) 
+	{
+		String SQL="SELECT * FROM PRODUCTS WHERE CATEGORY IN ( :categories) AND MANUFACTURER IN ( :brands)";
+		return jdbcTemplate.query(SQL,filterParams, new ProductMapper());
+	}
+	
+	public Product getProductById(String productId) 
+	{
+		String SQL="SELECT * FROM PRODUCTS WHERE ID= :id";
+		Map<String,Object> params=new HashMap<String,Object>();
+		params.put("id", productId);
+		return jdbcTemplate.queryForObject(SQL,params,new ProductMapper());
+	}
+
+	
+	public List<Product> getProductsByAnotherFilter(Map<String, Object> filterParams) 
+	{
+		String SQL="SELECT * FROM PRODUCTS WHERE CATEGORY= :category AND  MANUFACTURER IN ( :manufacturer) AND UNIT_PRICE BETWEEN :low AND :high";
+		return jdbcTemplate.query(SQL,filterParams,new ProductMapper());
+	}
+	
+	public void addProduct(Product product) 
+	{
+		String SQL="INSERT INTO PRODUCTS (ID," + "NAME," + "DESCRIPTION," + "UNIT_PRICE," + "MANUFACTURER," + "CATEGORY," + "CONDITION," + "UNITS_IN_STOCK," + "UNITS_IN_ORDER," + "DISCONTINUED)" + "VALUES( :id, :name, :desc, :price, :manufacturer, :category, :condition, :inStock, :inOrder, :discontinued)";
+		Map<String,Object> params=new HashMap<String,Object>();
+		params.put("id", product.getProductId());
+		params.put("name", product.getName());
+		params.put("desc", product.getDescription());
+		params.put("price", product.getUnitPrice());
+		params.put("manufacturer", product.getManufacturer());
+		params.put("category", product.getCategory());
+		params.put("condition", product.getCondition());
+		params.put("inStock", product.getUnitsInStock());
+		params.put("inOrder", product.getUnitsInOrder());
+		params.put("discontinued", product.isDiscontinued());
+		jdbcTemplate.update(SQL, params);
+	}
+	
 	private static final class ProductMapper implements RowMapper<Product>
 	{
 		public Product mapRow(ResultSet rs,int rowNum) throws SQLException
@@ -46,4 +101,7 @@ public class InMemoryProductRepository implements ProductRepository {
 			return product;
 		}
 	}
+
+	
+
 }
