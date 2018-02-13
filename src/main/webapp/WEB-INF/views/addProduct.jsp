@@ -10,6 +10,11 @@
 </head>
 <body>
 <section>
+<div class="pull-right" style="padding-right:50px">
+<a href="?language=en">English</a>|<a href="?language=nl">Dutch</a>
+</div>
+</section>
+<section>
 <div class="jumbotron">
 <div class="container">
 <h1>Products</h1>
@@ -19,8 +24,7 @@
 </div>
 </section>
 <section class="container">
-<form:form method="POST" modelAttribute="newProduct" class="form-horizontal">
-
+<form:form method="POST" modelAttribute="newProduct" class="form-horizontal" enctype="multipart/form-data">
 <fieldset>
 <legend>Add new Product</legend>
 
@@ -101,6 +105,26 @@
 <form:radiobutton path="condition" value="Refurbished" /> <spring:message code="addProduct.form.refurbished.label" />
 </div>
 </div>
+
+<div class="form-group">
+<label class="control-label col-lg-2" for="productImage">
+<spring:message code="addProduct.form.productImage.label"></spring:message>
+</label>
+<div class="col-lg-2">
+<form:input id="productImage" path="productImage" type="file" class="form:input-large" />
+</div>
+</div>
+
+
+<div class="form-group">
+<label class="control-label col-lg-2" for="productManual">
+<spring:message code="addProduct.form.productManual.label"></spring:message>
+</label>
+<div class="col-lg-2">
+<form:input id="productManual" path="productManual" type="file" class="form:input-large" />
+</div>
+</div>
+
 
 <div class="form-group">
 <div class="col-lg-offset-2 col-lg-10">

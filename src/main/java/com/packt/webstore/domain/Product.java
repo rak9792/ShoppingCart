@@ -1,8 +1,15 @@
 package com.packt.webstore.domain;
 
 import java.math.BigDecimal;
-import java.io.Serializable;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.io.Serializable;
+import javax.xml.bind.annotation.*;
+
+@XmlRootElement
 public class Product implements Serializable {
 	
 	private static final long serialVersionUID=3678107792576131001L;
@@ -18,6 +25,27 @@ public class Product implements Serializable {
 	private boolean discontinued;
 	private String condition;
 	
+	@JsonIgnore
+	private MultipartFile productImage;
+	
+	@JsonIgnore
+	private MultipartFile productManual;
+	
+	@XmlTransient
+	public MultipartFile getProductManual() {
+		return productManual;
+	}
+	public void setProductManual(MultipartFile productManual) {
+		this.productManual = productManual;
+	}
+	
+	@XmlTransient
+	public MultipartFile getProductImage() {
+		return productImage;
+	}
+	public void setProductImage(MultipartFile productImage) {
+		this.productImage = productImage;
+	}
 	public Product()
 	{
 		super();
