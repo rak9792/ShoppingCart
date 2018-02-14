@@ -1,6 +1,8 @@
 package com.packt.webstore.controller;
 
 import com.packt.webstore.service.*;
+import com.packt.webstore.validator.ProductValidator;
+import com.packt.webstore.validator.UnitsInStockValidator;
 
 import java.io.File;
 import java.util.*;
@@ -34,7 +36,8 @@ import com.packt.webstore.exception.ProductNotFoundException;
 @RequestMapping("market")//Relative Request Mapping
 public class ProductController {
 
-	
+	@Autowired
+	private ProductValidator productValidator;
 	
 	@Autowired
 	private ProductService productService;
@@ -97,6 +100,7 @@ public class ProductController {
 		@InitBinder
 		public void initialiseBinder(WebDataBinder binder)
 		{
+			binder.setValidator(productValidator);
 			binder.setAllowedFields("productId","name","unitPrice","description","manufacturer","category","unitsInStock","condition","productImage","productManual","language");
 		}
 		
