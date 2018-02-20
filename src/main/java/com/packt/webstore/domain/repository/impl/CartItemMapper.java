@@ -21,7 +21,7 @@ public class CartItemMapper implements RowMapper<CartItem>
 	public CartItem mapRow(ResultSet rs, int rowNum) throws SQLException 
 	{
 		CartItem cartItem=new CartItem(rs.getString("ID"));
-		cartItem.setProduct(productService.getProductById("PRODUCT_ID"));
+		cartItem.setProduct(productService.getProductById(rs.getString("PRODUCT_ID")));
 		cartItem.setQuantity(rs.getInt("QUANTITY"));
 		return cartItem;
 	}
