@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
 <title>Products</title>
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/1.5.5/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 <script src="/ShoppingCart/resources/js/controllers.js"></script>
 </head>
 <body>
@@ -44,11 +44,14 @@
 </a>
 <br><br>
 <p ng-controller="cartCtrl">
-<a href="#" class="btn-warning btn-large" ng-click="addToCart('${product.productId }
-')">
-<span class="glyphicon-shopping-cart glyphicon"></span> 
-Order Now</a>
-</p><br>
+<a href="#" class="btn btn-warning btn-large" 
+ng-click="addToCart('${product.productId }')">
+<span class="glyphicon-shopping-cart 
+glyphicon"></span> Order Now
+</a>
+<br><br><br>
+</p>
+
 <a href="<spring:url value="/cart"/>" class="btn btn-default">
 <span class="glyphicon-hand-right glyphicon"></span>View Cart
 </a>

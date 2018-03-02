@@ -4,14 +4,27 @@ import java.io.Serializable;
 
 public class Customer implements Serializable{
 	
-	private String customerId;
+	private static final long serialVersionUID=2284040482222162898L;
+	
+	private Long customerId;
 	private String name;
-	private String address;
-	private long noOfOrdersMade;
-	public String getCustomerId() {
+	private Address billingAddress;
+	private String phoneNumber;
+	public Customer()
+	{
+		super();
+		this.billingAddress=new Address();
+	}
+	public Customer(Long customerId,String name)
+	{
+		this();
+		this.customerId=customerId;
+		this.name=name;
+	}	
+	public Long getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(String customerId) {
+	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}
 	public String getName() {
@@ -20,31 +33,43 @@ public class Customer implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getAddress() {
-		return address;
+	public Address getBillingAddress() {
+		return billingAddress;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+	public void setBillingAddress(Address billingAddress) {
+		this.billingAddress = billingAddress;
 	}
-	public long getNoOfOrdersMade() {
-		return noOfOrdersMade;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
-	public void setNoOfOrdersMade(long i) {
-		this.noOfOrdersMade = i;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 	@Override
 	public boolean equals(Object o)
 	{
-		if(customerId.equals(((Customer)o).getCustomerId()))
+		if(this==o)
 			return true;
-		else
+		if(o==null)
 			return false;
+		if(getClass()!=o.getClass())
+			return false;
+		Customer other=(Customer)o;
+		if(customerId==null) {
+			if(other.customerId!=null)
+				return false;			
+		}else if(!customerId.equals(other.customerId))
+			return false;
+		return true;
 	}
 
 	@Override
 	public int hashCode()
 	{
-		return (31*((customerId==null)? 0 : customerId.hashCode()));
+		return (31 + ((customerId==null)? 0 : customerId.hashCode()));
 	}
 }

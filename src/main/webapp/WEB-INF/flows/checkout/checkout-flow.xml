@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+
+<var name="order" class="com.packt.webstore.domain.Order"/>
+
+<action-state id="addCartToOrder">
+<evaluate expression="cartServiceImpl.validate(requestParameters.cartId)" result="order.cart">
+</evaluate>
+<transition to="invalidCartWarning" on-exception="com.packt.webstore.exception.InvalidCartException"></transition>
+<transition to="collectCustomerInfo"></transition>
+</action-state> 
+
+<view-state id="collectCustomerInfo" view="collectCustomerInfo.jsp" model="order">
+<transition on="customerInfoCollected" to="collectShippingDetail"></transition>
+</view-state>
+
+<view-state id="collectShippingDetail" model="order">
+<transition on="shippingDetailCollected" to="orderConfirmation"></transition>
+<transition on="backToCollectCustomerInfo" to="collectCustomerInfo"></transition>
+</view-state>
+
+<view-state id="orderConfirmation">
+<transition on="orderConfirmed" to="processOrder"></transition>
+<transition on="backToCollectShippingDetail" to="collectShippingDetail"></transition>
+</view-state>
+
+<action-state id="processOrder">
+<evaluate expression="orderServiceImpl.saveOrder(order)" result="order.orderId">
+</evaluate>
+<transition to="thankCustomer"></transition>
+</action-state>
+
+<view-state id="invalidCartWarning">
+<transition to="endState"></transition>
+</view-state>
+
+<view-state id="thankCustomer">
+<transition to="endState"></transition>
+</view-state>
+
+<end-state id="endState"></end-state>
+
+<end-state id="cancelCheckout" view="checkoutCancelled.jsp"></end-state>
+<global-transitions>
+<transition on="cancel" to="cancelCheckout"></transition>
+</global-transitions>
+</flow>
