@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import com.packt.webstore.domain.Address;
 import com.packt.webstore.domain.Customer;
@@ -17,6 +18,7 @@ import com.packt.webstore.domain.ShippingDetail;
 import com.packt.webstore.domain.repository.OrderRepository;
 import com.packt.webstore.service.CartService;
 
+@Repository
 public class InMemoryOrderRepository implements OrderRepository {
 
 	@Autowired
@@ -38,7 +40,7 @@ public class InMemoryOrderRepository implements OrderRepository {
 	private long saveShippingDetail(ShippingDetail shippingDetail)
 	{
 		long addressId=saveAddress(shippingDetail.getShippingAddress());
-		String SQL="INSERT INTO SHIPPING_DETAIL(NAME,SHIPPING_DATE,SHIPPING_ADDRESS_ID)" + "VALUES ( :name, :shippingDate, :addressId)";
+		String SQL="INSERT INTO SHIPPING_DETAIL(NAME,SHIPPING_DATE,SHIPPING_ADDRESS)" + "VALUES ( :name, :shippingDate, :addressId)";
 		Map<String,Object> params=new HashMap<String,Object>();
 		params.put("name", shippingDetail.getName());
 		params.put("shippingDate", shippingDetail.getShippingDate());
@@ -85,7 +87,7 @@ public class InMemoryOrderRepository implements OrderRepository {
 	
 	private long createOrder(Order order)
 	{
-		String SQL="INSERT INTO ORDERS(CART_ID,CUSTOMER_ID,SHIPPING_DETAIL_ID)"+"VALUES( :cartId, :customerId, :shippingDetail)";
+		String SQL="INSERT INTO ORDERS(CART_ID,CUSTOMER_ID,SHIPPING_DETAIL)"+"VALUES( :cartId, :customerId, :shippingDetail)";
 		Map<String,Object> params=new HashMap<String,Object>();
 		params.put("id",order.getOrderId());
 		params.put("cartId",order.getCart().getId());

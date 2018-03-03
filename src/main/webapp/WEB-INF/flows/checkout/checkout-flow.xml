@@ -42,7 +42,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.spr
 
 <end-state id="endState"></end-state>
 
-<end-state id="cancelCheckout" view="checkoutCancelled.jsp"></end-state>
+<end-state id="cancelCheckout" view="checkOutCancelled.jsp"></end-state>
 <global-transitions>
 <transition on="cancel" to="cancelCheckout"></transition>
 </global-transitions>
